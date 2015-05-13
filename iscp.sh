@@ -10,7 +10,7 @@ direction='not yet specified'
 while [ "$direction" != 'from' ] && [ "$direction" != 'to' ]; do
   echo -n 'Are you copying FROM or TO a remote server? '
   read temp
-  direction="$(echo $temp | awk '{print tolower($0)}')"
+  direction="$(echo "$temp" | awk '{print tolower($0)}')"
 done
 
 host=''
@@ -34,7 +34,6 @@ while [ "$remote_path" == '' ]; do
   fi
   echo -n ' (Type "ssh" to ssh in and check.) '
   read temp
-  first_character="$(echo $temp | head -c 1)"
   if [ "$temp" == 'ssh' ]; then
     ssh "$username@$host"
     echo
@@ -63,7 +62,7 @@ fi
 
 folder_flag=''
 if [ "$direction" == 'from' ]; then
-  last_character_of_remote_path="$(echo -n $remote_path | tail -c 1)"
+  last_character_of_remote_path="$(echo -n "$remote_path" | tail -c 1)"
   if [ "$last_character_of_remote_path" == '.' ] || [ "$last_character_of_remote_path" == '/' ]; then
     is_folder='yes'
   else
