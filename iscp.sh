@@ -10,20 +10,20 @@ echo -e '\033[0m'
 direction='not yet specified'
 while [ "$direction" != 'from' ] && [ "$direction" != 'to' ]; do
   echo -n 'Are you copying FROM or TO a remote server? '
-  read temp
+  read -r temp
   direction="$(echo "$temp" | awk '{print tolower($0)}')"
 done
 
 host=''
 while [ "$host" == '' ]; do
   echo -n "What's the ADDRESS of the remote server? "
-  read host
+  read -r host
 done
 
 username=''
 while [ "$username" == '' ]; do
   echo -n "What's your USERNAME on that remote server? "
-  read username
+  read -r username
 done
 
 remote_path=''
@@ -34,7 +34,7 @@ while [ "$remote_path" == '' ]; do
     echo -n 'Where are you copying TO on the remote server?'
   fi
   echo -n ' (Type "ssh" to ssh in and check.) '
-  read temp
+  read -r temp
   if [ "$temp" == 'ssh' ]; then
     ssh "$username@$host"
     echo
@@ -47,14 +47,14 @@ done
 local_path='not yet specified'
 if [ "$direction" == 'from' ]; then
   echo -n 'What is the LOCAL DESTINATION of the file? (Default is .) '
-  read local_path
+  read -r local_path
   if [ "$local_path" == '' ]; then
     local_path='.'
   fi
 else
   if [ $# -eq 0 ]; then
     echo -n 'What is the LOCAL PATH of this file? '
-    read temp
+    read -r temp
     local_path="'$temp'"
   else
     local_path="'$1'"
@@ -71,7 +71,7 @@ if [ "$direction" == 'from' ]; then
   fi
   while [ "$is_folder" != 'yes' ] && [ "$is_folder" != 'no' ]; do
     echo -n 'Is the remote path a FOLDER? '
-    read is_folder
+    read -r is_folder
   done
   if [ "$is_folder" == 'yes' ]; then
     folder_flag=' -r'
@@ -98,7 +98,7 @@ echo -e "\033[35m$scp_command\033[0m"
 
 echo
 echo -n 'Press return to continue. Anything else will abort. '
-read temp
+read -r temp
 if [ "$temp" == '' ]; then
   echo
   eval "$scp_command"
