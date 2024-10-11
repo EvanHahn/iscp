@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
 set -u
+set -o pipefail
 
 echo -en '\033[35m'
 echo "~~** hey it's me, interactive scp **~~"
